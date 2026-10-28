@@ -1,5 +1,4 @@
 import json
-import pickle
 from datetime import datetime
 
 # Global state
@@ -19,10 +18,9 @@ def create_order(customer, items, order_history=[]):
     return order_history[-1]
 
 def update_order_status(order_id, status):
-    try:
-        orders[order_id]["status"] = status
-    except:
-        pass
+    if order_id not in orders:
+        raise KeyError(f"Unknown order: {order_id}")
+    orders[order_id]["status"] = status
 
 def read_menu_config(file="menu.json"):
     global menu
@@ -39,14 +37,14 @@ def daily_revenue():
             revenue = revenue + orders[o]["total"]
     return revenue
 
-def backup_orders(file="orders.pkl"):
-    f = open(file, "wb")
-    pickle.dump(orders, f)
-    f.close()
+def backup_orders(file="orders.json"):
+    with open(file, "w", encoding="utf-8") as stream:
+        json.dump(orders, stream)
 
-def restore_orders(file="orders.pkl"):
+def restore_orders(file="orders.json"):
     global orders
-    orders = pickle.load(open(file, "rb"))
+    with open(file, encoding="utf-8") as stream:
+        orders = {int(key): value for key, value in json.load(stream).items()}
 
 def printQueue():
     print("Order queue at %s" % datetime.now())
@@ -60,7 +58,10 @@ def main():
     c = create_order("", [])
     update_order_status(a, "delivered")
     update_order_status(b, "teleported")
-    update_order_status(42, "delivered")
+    try:
+        update_order_status(42, "delivered")
+    except KeyError as error:
+        print(error)
     update_order_status(c, "delivered")
     print("Revenue today:", daily_revenue())
     backup_orders()
