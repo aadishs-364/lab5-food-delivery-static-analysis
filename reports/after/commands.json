@@ -1,0 +1,14 @@
+{
+  "pylint": {
+    "command": "python -m pylint --persistent=n delivery_system.py",
+    "exit_code": 0
+  },
+  "bandit": {
+    "command": "python -m bandit -r delivery_system.py -f txt",
+    "exit_code": 0
+  },
+  "flake8": {
+    "command": "python -m flake8 delivery_system.py",
+    "exit_code": 0
+  }
+}

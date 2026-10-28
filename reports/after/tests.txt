@@ -1,0 +1,17 @@
+test_backup_roundtrip_and_next_id (test_delivery_system.DeliveryTests.test_backup_roundtrip_and_next_id) ... ok
+test_custom_menu (test_delivery_system.DeliveryTests.test_custom_menu) ... ok
+test_import_has_no_demo_output (test_delivery_system.DeliveryTests.test_import_has_no_demo_output) ... ok
+test_invalid_backup_preserves_state (test_delivery_system.DeliveryTests.test_invalid_backup_preserves_state) ... ok
+test_invalid_menu_is_reported_without_state_loss (test_delivery_system.DeliveryTests.test_invalid_menu_is_reported_without_state_loss) ... ok
+test_invalid_status_preserves_order (test_delivery_system.DeliveryTests.test_invalid_status_preserves_order) ... ok
+test_missing_menu_uses_defaults (test_delivery_system.DeliveryTests.test_missing_menu_uses_defaults) ... ok
+test_missing_order_is_reported (test_delivery_system.DeliveryTests.test_missing_order_is_reported) ... ok
+test_optional_history (test_delivery_system.DeliveryTests.test_optional_history) ... ok
+test_order_total_and_item_copy (test_delivery_system.DeliveryTests.test_order_total_and_item_copy) ... ok
+test_reject_invalid_orders_without_mutation (test_delivery_system.DeliveryTests.test_reject_invalid_orders_without_mutation) ... ok
+test_revenue_counts_only_delivered_orders (test_delivery_system.DeliveryTests.test_revenue_counts_only_delivered_orders) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.036s
+
+OK

@@ -9,6 +9,7 @@ MENU = {}
 DEFAULT_MENU = {"pizza": 250, "burger": 150, "fries": 90, "coke": 40}
 VALID_STATUSES = ("placed", "cooking", "out_for_delivery", "delivered")
 
+
 def create_order(customer, items, order_history=None):
     """Create a valid order; optionally append its ID to a caller's history."""
     if not isinstance(customer, str) or not customer.strip():
@@ -29,6 +30,7 @@ def create_order(customer, items, order_history=None):
     order_history.append(order_id)
     return order_id
 
+
 def update_order_status(order_id, status):
     """Set a known status on an existing order, reporting invalid requests."""
     if status not in VALID_STATUSES:
@@ -37,6 +39,7 @@ def update_order_status(order_id, status):
         raise KeyError(f"Unknown order: {order_id}")
     ORDERS[order_id]["status"] = status
 
+
 def valid_price(value):
     """Return whether a value is a finite, nonnegative JSON number."""
     return (
@@ -44,6 +47,7 @@ def valid_price(value):
         and value >= 0
         and (isinstance(value, int) or isfinite(value))
     )
+
 
 def read_menu_config(file="menu.json"):
     """Load a menu, using defaults only when the file does not exist."""
@@ -62,6 +66,7 @@ def read_menu_config(file="menu.json"):
     MENU.clear()
     MENU.update(loaded)
 
+
 def daily_revenue():
     """Return the total charged for delivered orders only."""
     return sum(
@@ -69,10 +74,12 @@ def daily_revenue():
         if order["status"] == "delivered"
     )
 
+
 def backup_orders(file="orders.json"):
     """Save the current queue as data, without executable pickle payloads."""
     with open(file, "w", encoding="utf-8") as stream:
         json.dump(ORDERS, stream, indent=2, allow_nan=False)
+
 
 def validate_saved_order(order):
     """Reject malformed order records before replacing the current queue."""
@@ -91,6 +98,7 @@ def validate_saved_order(order):
     if order.get("status") not in VALID_STATUSES:
         raise ValueError("Saved status is invalid")
 
+
 def restore_orders(file="orders.json"):
     """Load validated JSON with integer IDs; preserve state on failure."""
     with open(file, encoding="utf-8") as stream:
@@ -107,11 +115,13 @@ def restore_orders(file="orders.json"):
     ORDERS.clear()
     ORDERS.update(restored)
 
+
 def print_queue():
     """Print each order's customer, status and total."""
     print(f"Order queue at {datetime.now()}")
     for order_id, order in ORDERS.items():
         print(order_id, order["customer"], order["status"], order["total"])
+
 
 def main():
     """Demonstrate order creation, status changes and a backup round trip."""
@@ -124,6 +134,7 @@ def main():
     backup_orders()
     restore_orders()
     print_queue()
+
 
 if __name__ == "__main__":
     main()
